@@ -1,6 +1,7 @@
 #!/usr/bin/ksh
 # Just a simple way to play with tydom main.py file
-#
+# Ref : https://domotique.web2diz.net/
+# 
 # You can use same arguiment than in main.py
 # The only difference is a status.txt file willbe generated each time 
 # This file can be used to update domoticz for exemple
