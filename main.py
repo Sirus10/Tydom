@@ -24,13 +24,13 @@ from http.server import BaseHTTPRequestHandler
 
 
 
-# Globals
+# Globals config 
+# MAC adress of your Tydom 1.0
 mac = "00:1A:XX:XX:XX:XX"
-login = mac
 password = "PUT_YOUR_PASS_HERE"
-# Local ip address or mediation.tydom.com for remote connexion
-# host = "mediation.tydom.com" #"192.168.0.20"
+# Local ip of the Tydom 1.0
 host = "192.168.XXX.XXX"
+login = mac
 
 action ="not set"
 id = "not set"
