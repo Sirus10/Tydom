@@ -30,7 +30,8 @@ cat $DIR/status.txt
 
 
 # Update one by one each devices in domoticz
-while IFS="|" read -r TYDOM_ID INIT_NAME DOMO_ID_VAL DOMO_ID_CMD NAME
+if [ -f $DIR/config.txt ] ; then 
+while IFS="|" read -r TYDOM_ID DOMO_ID_VAL DOMO_ID_CMD NAME
 do 
 	# On recuperer la valeur dans le fichier status.txt pour cet ID
 	VALUDOMO=`grep $TYDOM_ID $DIR/status.txt |grep : | cut -d':' -f2 | sed 's/ //'`
@@ -44,9 +45,11 @@ do
 	# if [ "$NAMEONLY" != '' ] ; then 
 		#On le renmone en modifiant le % 
 		NewName=`echo "$NAME+-+$VALUDOMO%25" |sed "s/ /+/g"`
-		# NewName=$NAME
-		echo NAMEONLY : $NAMEONLY
+		echo " "		
+		echo NAMEONLY : $NAME
 		echo NewName: $NewName
+		echo VALUDOMO: $VALUDOMO
+
 		curl --silent --max-time 5 "http://$DOMOTICZ/json.htm?type=setused&idx=$DOMO_ID_CMD&name=$NewName&used=true" >>/dev/null
 	# fi
 
@@ -54,13 +57,20 @@ do
 	curl --silent --max-time 5 "http://$DOMOTICZ/json.htm?type=command&param=udevice&idx=$DOMO_ID_CMD&nvalue=100&svalue=5" >>/dev/null
 
 done < $DIR/config.txt
+else 
+	echo " "
+	echo "#### Initialisation config file creation :" 
+	echo "#### CONFIG ####"
+	grep 1600 $DIR/config.json |grep -v ":" |sed 's/ /|ID_DOMO_SWITCH|ID_DOMO_UTILITY|/'  > $DIR/config.txt
 
+	cat $DIR/config.txt
+	echo "#### CONFIG ####"
+	echo "#### Please update $DIR/config.txt now" 
+fi 
+
+# clear info
 rm $DIR/config.json
-
-## Temp passé
-hrs=$(( SECONDS/3600 )); mins=$(( (SECONDS-hrs*3600)/60)); secs=$(( SECONDS-hrs*3600-mins*60 ))
-printf 'Time spent: %02d:%02d:%02d\n' $hrs $mins $secs
-
+# rm $DIR/config.txt
 
 
 
