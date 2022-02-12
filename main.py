@@ -2,6 +2,7 @@
 #########################################################
 #       Addapted from initial work :
 #       https://github.com/cth35/tydom_python
+#       Ref : https://domotique.web2diz.net/
 #
 #       Usage : python main.py [action, id, valueToSet]
 #
